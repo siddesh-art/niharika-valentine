@@ -1,0 +1,192 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Niharika ❤️ Valentine</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+      text-align: center;
+      color: #5a0d1c;
+      overflow-x: hidden;
+    }
+    section {
+      min-height: 100vh;
+      display: none;
+      padding: 24px;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    section.active { display: flex; }
+    button {
+      padding: 14px 28px;
+      margin: 10px;
+      border: none;
+      border-radius: 24px;
+      font-size: 16px;
+      background: #b11226;
+      color: #fff;
+      cursor: pointer;
+    }
+    .gifts {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 12px;
+      width: 100%;
+      max-width: 900px;
+    }
+    .gift {
+      background: #fff;
+      padding: 16px;
+      border-radius: 16px;
+      cursor: pointer;
+    }
+    iframe {
+      display: none;
+      width: 100%;
+      height: 260px;
+      border: none;
+      border-radius: 16px;
+      margin-top: 10px;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 12px;
+      max-width: 900px;
+    }
+    .gallery img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 14px;
+    }
+    @media(max-width:768px){
+      .gifts{grid-template-columns:1fr;}
+      .gallery{grid-template-columns:repeat(2,1fr);}
+    }/* ❤️ Floating hearts & 🌸 flowers */
+.float {
+  position: fixed;
+  bottom: -20px;
+  font-size: 22px;
+  animation: floatUp linear forwards;
+  pointer-events: none;
+  z-index: 999;
+}
+@keyframes floatUp {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-120vh); opacity: 0; }
+}
+
+  </style>
+</head>
+<body onclick="startMusic()"><audio id="bgMusic" loop preload="auto">
+  <source src="minchagi_gaalipata.mp3" type="audio/mpeg">
+</audio><section id="s1" class="active">
+  <h1>Niharika ❤️</h1>
+  <h2>Will you be my Valentine?</h2>
+  <button onclick="go(2)">Yes</button>
+  <button onmouseover="this.style.transform='translate('+Math.random()*200+'px,'+Math.random()*200+'px)'">No</button>
+</section><section id="s2">
+  <h1>Thanks for being my Valentine 💖</h1>
+  <button onclick="go(3)">Next</button>
+</section><section id="s3">
+  <h1>Gifts for You 🎁</h1>
+  <div class="gifts">
+    <div class="gift" onclick="toggle('g1')">🎀 Surprise</div>
+    <iframe id="g1" src="https://tenor.com/embed/25415561"></iframe><div class="gift" onclick="toggle('g2')">💍 Promise</div>
+<iframe id="g2" src="https://tenor.com/embed/15951008"></iframe>
+
+<div class="gift" onclick="toggle('g3')">🌸 Memories</div>
+<iframe id="g3" src="https://tenor.com/embed/12913528"></iframe>
+
+  </div>
+  <button onclick="go(4)">Next</button>
+</section><section id="s4">
+  <h1>One Love Letter 💌</h1>
+  <p id="letter"></p>
+  <button onclick="go(5)">Next</button>
+</section><section id="s5">
+  <h1>Our Photographs 📸</h1>
+  <div class="gallery">
+    <img src="photo1.jpg">
+    <img src="photo2.jpg">
+    <img src="photo3.jpg">
+    <img src="photo4.jpg">
+    <img src="photo5.jpg">
+    <img src="photo6.jpg">
+  </div>
+  <button onclick="go(6)">Next</button>
+</section><section id="s6">
+  <h1>I Love You, Niharika ❤️</h1>
+</section><script>
+let musicStarted=false;
+function startMusic(){
+  if(musicStarted) return;
+  const m=document.getElementById('bgMusic');
+  m.volume=0.6;
+  m.play().catch(()=>{});
+  musicStarted=true;
+}
+
+function go(n){
+  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s'+n).classList.add('active');
+  burst();
+  if(n===4) typeLetter();
+}
+
+function toggle(id){
+  const el=document.getElementById(id);
+  el.style.display = el.style.display==='block'?'none':'block';
+  burst();
+}
+
+function burst(){
+  const icons = ['❤️','💖','💕','🌸','🌹','💐'];
+  for(let i=0;i<18;i++){
+    const f=document.createElement('div');
+    f.className='float';
+    f.innerText=icons[Math.floor(Math.random()*icons.length)];
+    f.style.left=Math.random()*100+'vw';
+    f.style.animationDuration=(4+Math.random()*3)+'s';
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),7000);
+  }
+}
+
+const text=`This is for you..
+
+I got attached to you without planning it. It just happened. One day you were there, and suddenly you mattered too much.
+
+I think about you in small quiet moments, when nothing is happening. I care in ways I don't know how to explain without sounding foolish.
+
+You stay in my head, in my habits, in my feelings. Even when I try not to, it's always you.
+
+That's the truth I don't hide anymore..`;
+
+function typeLetter(){
+  const el=document.getElementById('letter');
+  el.innerHTML='';
+  let i=0;
+  function t(){
+    if(i<text.length){
+      el.innerHTML+= text[i]==='
+'?'<br>':text[i];
+      i++; setTimeout(t,40);
+    }
+  }
+  t();
+}
+
+// gentle ambient animation
+window.onload = () => {
+  burst();
+  setInterval(burst, 6000);
+};
+</script></body>
+</html>
