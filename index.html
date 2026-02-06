@@ -19,10 +19,13 @@
   .floats span{position:absolute; bottom:-40px; font-size:22px; animation:rise 9s linear infinite;}
   @keyframes rise{from{transform:translateY(0);} to{transform:translateY(-120vh); opacity:0;}}
   .gifts{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; max-width:900px; width:100%;}
-  .gift{background:#fff; padding:16px; border-radius:16px;}
+  .gift{background:#fff; padding:16px; border-radius:16px; cursor:pointer;}
   iframe{display:none; width:100%; height:260px; border:none; border-radius:14px; margin-top:10px;}
   .gallery{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; max-width:900px;}
-  .gallery img{width:100%; height:160px; object-fit:cover; border-radius:14px;}
+  .gallery img{width:100%; height:160px; object-fit:cover; border-radius:14px; opacity:0; transform:scale(0.9); animation:fadeIn 0.8s ease forwards; position:relative;}
+  @keyframes fadeIn{to{opacity:1; transform:scale(1);}}
+  .heart{position:absolute; font-size:18px; animation:pop 1s ease forwards; pointer-events:none;}
+  @keyframes pop{0%{transform:scale(0); opacity:1;} 50%{transform:scale(1.4);} 100%{transform:translateY(-40px) scale(0.8); opacity:0;}}
   @media(max-width:768px){.gifts{grid-template-columns:1fr;} .gallery{grid-template-columns:repeat(2,1fr);} }
 </style>
 </head>
@@ -48,27 +51,31 @@
 </section><section id="s3">
   <h1>Gifts for You 🎁</h1>
   <div class="gifts">
-    <div class="gift" onclick="toggle('g1')">🎀 One Tight</div>
+    <div class="gift" onclick="toggle('g1')">🎀 A cozy hug for you</div>
     <iframe id="g1" src="https://tenor.com/embed/25415561"></iframe>
-    <div class="gift" onclick="toggle('g2')">💍 A beutiful</div>
+    <div class="gift" onclick="toggle('g2')">💍 Always and only you</div>
     <iframe id="g2" src="https://tenor.com/embed/15951008"></iframe>
-    <div class="gift" onclick="toggle('g3')">🌸 A lot of</div>
+    <div class="gift" onclick="toggle('g3')">🌸 All my love, forever</div>
     <iframe id="g3" src="https://tenor.com/embed/12913528"></iframe>
   </div>
   <button onclick="go('s4')">Next</button>
 </section><section id="s4">
-  <h1>One Love Letter 💌</h1>
+  <h1>A whisper of love 💌</h1>
   <p id="letter"></p>
   <button onclick="go('s5')">Next</button>
 </section><section id="s5">
-  <h1>The girl i finally fell for 📸</h1>
+  <h1>The Girl I Finally Fell For 📸</h1>
   <div class="gallery">
-    <img src="photo1.jpg"><img src="photo2.jpg"><img src="photo3.jpg">
-    <img src="photo4.jpg"><img src="photo5.jpg"><img src="photo6.jpg">
+    <img src="photo1.jpg" style="animation-delay:0s" onanimationend="heartBurst(this)">
+    <img src="photo2.jpg" style="animation-delay:0.4s" onanimationend="heartBurst(this)">
+    <img src="photo3.jpg" style="animation-delay:0.8s" onanimationend="heartBurst(this)">
+    <img src="photo4.jpg" style="animation-delay:1.2s" onanimationend="heartBurst(this)">
+    <img src="photo5.jpg" style="animation-delay:1.6s" onanimationend="heartBurst(this)">
+    <img src="photo6.jpg" style="animation-delay:2s" onanimationend="heartBurst(this)">
   </div>
   <button onclick="go('s6')">Next</button>
 </section><section id="s6">
-  <h1>You complete me Niharika ❤️</h1>
+  <h1>You Complete Me Niharika ❤️</h1>
 </section><script>
 let started=false;
 function go(id){
@@ -92,6 +99,18 @@ const text=`This one is for you..\n\nI got attached to you without planning it. 
 function typeLetter(){
   const el=document.getElementById('letter'); el.innerHTML=''; let i=0;
   (function t(){ if(i<text.length){ el.innerHTML+= text[i]==='\n'?'<br>':text[i]; i++; setTimeout(t,35);} })();
+}
+function heartBurst(img){
+  const rect = img.getBoundingClientRect();
+  for(let i=0;i<6;i++){
+    const h=document.createElement('div');
+    h.className='heart';
+    h.innerText='❤️';
+    h.style.left = rect.left + rect.width/2 + (Math.random()*30-15) + 'px';
+    h.style.top = rect.top + rect.height/2 + (Math.random()*30-15) + 'px';
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),1000);
+  }
 }
 </script></body>
 </html>
